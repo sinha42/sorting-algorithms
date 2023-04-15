@@ -1,5 +1,11 @@
 from typing import List
 
+def swap(l, i, j):
+    '''Swaps l[i] with l[j]'''
+    temp = l[i]
+    l[i] = l[j]
+    l[j] = temp
+
 def bubble_sort(l: List[int]):
     
     print('bubble_sort')
@@ -7,8 +13,10 @@ def bubble_sort(l: List[int]):
 
 def insertion_sort(l: List[int]):
     
-    print('insertion_sort')
-    print(l)
+    for i in range(len(l)):
+        for j in range(len(l[:i]), 0, -1):
+            if(l[j] < l[j-1]):
+                swap(l, j, j-1)
 
 def selection_sort(l: List[int]):
     

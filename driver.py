@@ -34,4 +34,6 @@ if __name__ == '__main__':
         if chosen:
             
             globals()[algo](nums)
+            print(nums)
+
             exit(0)
