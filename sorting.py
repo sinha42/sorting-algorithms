@@ -1,9 +1,20 @@
 from typing import List
 
+def swap(l, i, j):
+    '''Swaps l[i] for l[j]'''
+    temp = l[i]
+    l[i] = l[j]
+    l[j] = temp
+
 def bubble_sort(l: List[int]):
     
-    print('bubble_sort')
-    print(l)
+    for i in range(len(l)):
+        bubbleable = l[1:-i] if i > 0 else l[1:]
+        for j in range(1, len(bubbleable)+1): #range returns half open range
+            if(l[j-1] > l[j]):
+                swap(l, j-1, j)
+
+    return l
 
 def insertion_sort(l: List[int]):
     
