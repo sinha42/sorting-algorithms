@@ -1,3 +1,4 @@
+import random
 import argparse
 from sorting import *
 
@@ -12,13 +13,25 @@ if __name__ == '__main__':
 
         abbrev = f'-{sorting_algo[0]}'
         full_option = f'--{sorting_algo}-sort'
-        sorting_algo_group.add_argument(abbrev, full_option, action='store_true')
+        description = 'Use the {sorting_algo} sort algorithm'
+
+        sorting_algo_group.add_argument(abbrev, full_option, 
+                                        action='store_true', help=description)
+
+    parser.add_argument('-n', type=int, 
+                        help='number of ints to sort',
+                        default=10)
+    parser.add_argument('--max-value', type=int,
+                        help='maximum value that can appear in the list to sort',
+                        default=100)
 
     args = parser.parse_args()
 
-    for algo, chosen in args._get_kwargs():
+    sort_options = [(arg, val) for arg, val in args._get_kwargs() if 'sort' in arg]
+    nums = [random.randint(0, args.max_value) for i in range(args.n)]
+
+    for algo, chosen in sort_options:
         if chosen:
             
-            globals()[algo]()
+            globals()[algo](nums)
             exit(0)
-
