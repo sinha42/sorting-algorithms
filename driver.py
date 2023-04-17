@@ -52,8 +52,7 @@ if __name__ == '__main__':
     
     parser = argparse.ArgumentParser(description='Sorting algorithm implementations')
 
-    #sorting_algo_group = parser.add_mutually_exclusive_group(required=True)
-    sorting_algo_group = parser.add_mutually_exclusive_group()
+    sorting_algo_group = parser.add_mutually_exclusive_group(required=True)
     for sorting_algo in SORTING_ALGORITHMS:
 
         abbrev = f'-{sorting_algo[0]}'
@@ -62,27 +61,33 @@ if __name__ == '__main__':
 
         sorting_algo_group.add_argument(abbrev, full_option, 
                                         action='store_true', help=description)
+    sorting_algo_group.add_argument('-g', '--gui', action='store_true',
+                                    help='Launch GUI instead of using command line')
 
-    parser.add_argument('-n', type=int, 
-                        help='number of ints to sort',
-                        default=10)
+    parser.add_argument('-n', type=int, help='number of ints to sort', default=10)
     parser.add_argument('--max-value', type=int,
                         help='maximum value that can appear in the list to sort',
                         default=100)
     args = parser.parse_args()
 
-    root = tk.Tk()
-    app = SortingApplication(args.n, args.max_value, master=root)
-    app.master.title('Sorting')
-    app.mainloop()
+    # create GUI application
+    if args.gui:
 
-    '''
-    sort_options = [(arg, val) for arg, val in args._get_kwargs() if 'sort' in arg]
-    nums = [random.randint(0, args.max_value) for i in range(args.n)]
+        root = tk.Tk()
+        app = SortingApplication(args.n, args.max_value, master=root)
+        app.master.title('Sorting')
+        app.mainloop()
 
-    for algo, chosen in sort_options:
-        if chosen:
-            
-            globals()[algo](nums)
-            exit(0)
-    '''
+    # command line version
+    else:
+        
+        nums = [random.randint(0, args.max_value) for i in range(args.n)]
+        print(nums)
+
+        sort_options = [(arg, val) for arg, val in args._get_kwargs() if 'sort' in arg]
+
+        for algo, chosen in sort_options:
+            if chosen:
+                
+                vars(sorting)[algo](nums)
+                exit(0)
