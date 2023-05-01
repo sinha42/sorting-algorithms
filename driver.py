@@ -50,6 +50,8 @@ class SortingApplication(tk.Frame):
 
 if __name__ == '__main__':
     
+    print('Thanks for using this :)')
+    
     parser = argparse.ArgumentParser(description='Sorting algorithm implementations')
 
     sorting_algo_group = parser.add_mutually_exclusive_group(required=True)
